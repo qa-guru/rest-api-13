@@ -14,6 +14,8 @@ import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static specs.LoginSpecs.loginRequestSpec;
+import static specs.LoginSpecs.loginResponseSpec;
 
 public class ReqresInExtendedTests {
 
@@ -34,7 +36,7 @@ public class ReqresInExtendedTests {
                 .contentType(JSON)
                 .body(body)
                 .when()
-                .post("https://reqres.in/api/login")
+                .post("/api/login")
                 .then()
                 .log().status()
                 .log().body()
@@ -55,12 +57,13 @@ public class ReqresInExtendedTests {
                 .contentType(JSON)
                 .body(body)
                 .when()
-                .post("https://reqres.in/api/login")
+                .post("/api/login")
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .extract().as(LoginResponsePojoModel.class);
+                .extract()
+                .as(LoginResponsePojoModel.class);
 
         assertEquals("QpwL5tke4Pnpja7X4", response.getToken());
     }
@@ -78,16 +81,33 @@ public class ReqresInExtendedTests {
                 .contentType(JSON)
                 .body(body)
                 .when()
-                .post("https://reqres.in/api/login")
+                .post("/api/login")
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .extract().as(LoginResponseLombokModel.class);
+                .extract()
+                .as(LoginResponseLombokModel.class);
 
         assertThat(response.getToken()).isEqualTo("QpwL5tke4Pnpja7X4");
     }
 
+    @Test
+    void loginWithSpecsTest() {
+        LoginBodyLombokModel body = new LoginBodyLombokModel();
+        body.setEmail("eve.holt@reqres.in");
+        body.setPassword("cityslicka");
 
+        LoginResponseLombokModel response = given()
+                .spec(loginRequestSpec)
+                .body(body)
+                .when()
+                .post()
+                .then()
+                .spec(loginResponseSpec)
+                .extract()
+                .as(LoginResponseLombokModel.class);
 
+        assertThat(response.getToken()).isEqualTo("QpwL5tke4Pnpja7X4");
+    }
 }
