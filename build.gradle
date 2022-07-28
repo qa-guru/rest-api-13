@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'io.qameta.allure' version '2.9.6'
+    id "io.freefair.lombok" version "6.0.0-m2"
 }
 
 repositories {
@@ -10,9 +11,9 @@ repositories {
 def allureVersion = "2.18.1",
     selenideVersion = "6.6.6",
     restAssuredVersion = "5.1.1",
-    junitVersion = "5.8.2",
-    slf4jVersion = "1.7.32"
-
+    assertJVersion = "3.23.1",
+    slf4jVersion = "1.7.32",
+    junitVersion = "5.8.2"
 
 allure {
     report {
@@ -34,8 +35,9 @@ dependencies {
             "io.qameta.allure:allure-selenide:$allureVersion",
             "io.rest-assured:rest-assured:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
-            "org.junit.jupiter:junit-jupiter:$junitVersion",
-            "org.slf4j:slf4j-simple:$slf4jVersion"
+            "org.assertj:assertj-core:$assertJVersion",
+            "org.slf4j:slf4j-simple:$slf4jVersion",
+            "org.junit.jupiter:junit-jupiter:$junitVersion"
     )
 }
 

@@ -79,4 +79,6 @@ public class ReqresInTests {
                 .statusCode(400)
                 .body("error", is("Missing password"));
     }
+
+
 }
