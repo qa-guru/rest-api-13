@@ -8,7 +8,7 @@ import io.restassured.specification.ResponseSpecification;
 import static helpers.CustomApiListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginSpecs {
     public static RequestSpecification loginRequestSpec = with()
@@ -23,6 +23,6 @@ public class LoginSpecs {
             .expectStatusCode(200)
             .log(LogDetail.STATUS)
             .log(LogDetail.BODY)
-            .expectBody(hasKey("token"))
+            .expectBody("token", notNullValue())
             .build();
 }
